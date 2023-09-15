@@ -1,0 +1,25 @@
+name: Workflow for deployment in K8S
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Update Odoo Image
+      run: |
+        export IMAGE_VERSION=${{ vars.IMAGE_VERSION }}
+        envsubst < ./base/deployment.yaml > ./base/deployment_updated.yaml
+        mv ./base/deployment_updated.yaml ./base/deployment.yaml
+
+    - name: build using custom actions
+      uses : TrouveTaVoie/use-kustomization@main
+      with :
+       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+       aws-cluster-name: ${{ vars.AWS_NAME_CLUSTER }}
+       aws-region: ${{ vars.AWS_REGION }}
+       vars: ${{ toJson(vars) }}
+       secrets: ${{ toJson(secrets) }}
+       path: .
