@@ -9,3 +9,13 @@ commonLabels:
 resources:
 - ./postgres
 - ./base
+
+secretGenerator:
+- name: odoo-auth
+  envs:
+  - secret.env # values can be modified in github's repository secrets
+
+configMapGenerator:
+- name: odoo-env
+  envs:
+  - configmap.env # values can be modified in github's repository secrets
