@@ -1,0 +1,9 @@
+ingress:
+  enabled: true
+  ingress.ingressClassName: "alb"
+  hostname: "odoo.promosales.me"
+  path: /
+
+
+service:
+  type: ClusterIP

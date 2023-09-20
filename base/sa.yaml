@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-release-odoo
+  namespace: "default"
+  labels:
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/name: odoo
+automountServiceAccountToken: false
+secrets:
+  - name: my-release-odoo
