@@ -47,25 +47,34 @@ spec:
             - name: ALLOW_EMPTY_PASSWORD
               value: "no"
             - name: ODOO_DATABASE_HOST
-              value: "app-my-release-postgresql"
+              valueFrom:
+                secretKeyRef:
+                  name: odoo-secret
+                  key: DATABASE_HOST
             - name: ODOO_DATABASE_PORT_NUMBER
               value: "5432"
             - name: ODOO_DATABASE_NAME
-              value: bitnami_odoo
+              valueFrom:
+                secretKeyRef:
+                  name: odoo-secret
+                  key: DATABASE_NAME
             - name: ODOO_DATABASE_USER
-              value: bn_odoo
+              valueFrom:
+                secretKeyRef:
+                  name: odoo-secret
+                  key: DATABASE_USER
             - name: ODOO_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: my-release-postgresql
-                  key: password
+                  name: odoo-secret
+                  key: DATABASE_PASSWORD
             - name: ODOO_EMAIL
               value: "user@example.com"
             - name: ODOO_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: my-release-odoo
-                  key: odoo-password
+                  name: odoo-secret
+                  key: ODOO_PASSWORD
             - name: ODOO_SKIP_BOOTSTRAP
               value: "no"
             - name: ODOO_LOAD_DEMO_DATA
