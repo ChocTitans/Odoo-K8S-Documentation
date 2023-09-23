@@ -39,7 +39,7 @@ spec:
           
       containers:
         - name: my-release-odoo
-          image: docker.io/bitnami/odoo:16.0.20230915-debian-11-r0
+          image: "docker.io/bitnami/odoo:$IMAGE_VERSION"
           imagePullPolicy: "IfNotPresent"
           env:
             - name: BITNAMI_DEBUG
