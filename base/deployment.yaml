@@ -43,9 +43,15 @@ spec:
           imagePullPolicy: "IfNotPresent"
           env:
             - name: BITNAMI_DEBUG
-              value: "false"
+              valueFrom:
+              configMapKeyRef:
+                name: odoo-configmap
+                key: BITNAMI_DEBUG
             - name: ALLOW_EMPTY_PASSWORD
-              value: "no"
+              valueFrom:
+              configMapKeyRef:
+                name: odoo-configmap
+                key: ALLOW_EMPTY_PASSWORD
             - name: ODOO_DATABASE_HOST
               valueFrom:
                 secretKeyRef:

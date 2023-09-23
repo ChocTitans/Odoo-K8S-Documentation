@@ -87,7 +87,10 @@ spec:
                   name: odoo-secret
                   key: POSTGRES_PASSWORD
             - name: POSTGRES_DATABASE
-              value: "bitnami_odoo"
+              valueFrom:
+                secretKeyRef:
+                  name: odoo-secret
+                  key: DATABASE_NAME
             # Replication
             # Initdb
             # Standby
