@@ -72,17 +72,20 @@ spec:
               value: "/bitnami/postgresql/data"
             # Authentication
             - name: POSTGRES_USER
-              value: "bn_odoo"
+              valueFrom:
+                secretKeyRef:
+                  name: odoo-secret
+                  key: DATABASE_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: my-release-postgresql
-                  key: password
+                  name: odoo-secret
+                  key: DATABASE_PASSWORD
             - name: POSTGRES_POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: my-release-postgresql
-                  key: postgres-password
+                  name: odoo-secret
+                  key: POSTGRES_PASSWORD
             - name: POSTGRES_DATABASE
               value: "bitnami_odoo"
             # Replication
