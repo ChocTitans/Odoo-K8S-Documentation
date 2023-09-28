@@ -39,48 +39,33 @@ spec:
           
       containers:
         - name: my-release-odoo
-          image: "docker.io/bitnami/odoo:$IMAGE_VERSION"
+          image: docker.io/bitnami/odoo:16.0.20230915-debian-11-r0
           imagePullPolicy: "IfNotPresent"
           env:
             - name: BITNAMI_DEBUG
-              valueFrom:
-              configMapKeyRef:
-                name: odoo-configmap
-                key: BITNAMI_DEBUG
+              value: "false"
             - name: ALLOW_EMPTY_PASSWORD
-              valueFrom:
-              configMapKeyRef:
-                name: odoo-configmap
-                key: ALLOW_EMPTY_PASSWORD
+              value: "no"
             - name: ODOO_DATABASE_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: odoo-secret
-                  key: DATABASE_HOST
+              value: "app-my-release-postgresql"
             - name: ODOO_DATABASE_PORT_NUMBER
               value: "5432"
             - name: ODOO_DATABASE_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: odoo-secret
-                  key: DATABASE_NAME
+              value: bitnami_odoo
             - name: ODOO_DATABASE_USER
-              valueFrom:
-                secretKeyRef:
-                  name: odoo-secret
-                  key: DATABASE_USER
+              value: bn_odoo
             - name: ODOO_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: odoo-secret
-                  key: DATABASE_PASSWORD
+                  name: my-release-postgresql
+                  key: password
             - name: ODOO_EMAIL
               value: "user@example.com"
             - name: ODOO_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: odoo-secret
-                  key: ODOO_PASSWORD
+                  name: my-release-odoo
+                  key: odoo-password
             - name: ODOO_SKIP_BOOTSTRAP
               value: "no"
             - name: ODOO_LOAD_DEMO_DATA
