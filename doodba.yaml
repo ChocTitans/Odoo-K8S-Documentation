@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-server
+  template:
+    metadata:
+      labels:
+        app: test-server
+    spec:
+      containers:
+        - name: test
+          image: docker.io/tecnativa/doodba:16.0-onbuild
+          ports:
+            - name: http
+              containerPort: 8069
