@@ -10,7 +10,7 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: ttv-eks
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-2:230410870031:certificate/1872ad59-1a79-4b88-b381-f353dcd5bad3
+    alb.ingress.kubernetes.io/certificate-arn: yourcertificate
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
 

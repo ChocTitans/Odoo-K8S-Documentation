@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-release-odoo
+  name: erp-odoo
   namespace: "default"
   labels:
-    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/instance: erp
     app.kubernetes.io/name: odoo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: my-release
+      app.kubernetes.io/instance: erp
       app.kubernetes.io/name: odoo
   strategy:
     rollingUpdate: {}
@@ -18,11 +18,11 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: my-release
+        app.kubernetes.io/instance: erp
         app.kubernetes.io/name: odoo
     spec:
       
-      serviceAccountName: my-release-odoo
+      serviceAccountName: erp-odoo
       affinity:
         podAffinity:
           
@@ -31,14 +31,14 @@ spec:
             - podAffinityTerm:
                 labelSelector:
                   matchLabels:
-                    app.kubernetes.io/instance: my-release
+                    app.kubernetes.io/instance: erp
                     app.kubernetes.io/name: odoo
                 topologyKey: kubernetes.io/hostname
               weight: 1
         nodeAffinity:
           
       containers:
-        - name: my-release-odoo
+        - name: erp-odoo
           image: docker.io/bitnami/odoo:16.0.20230915-debian-11-r0
           imagePullPolicy: "IfNotPresent"
           env:
@@ -47,7 +47,7 @@ spec:
             - name: ALLOW_EMPTY_PASSWORD
               value: "no"
             - name: ODOO_DATABASE_HOST
-              value: "app-my-release-postgresql"
+              value: "db-postgresql"
             - name: ODOO_DATABASE_PORT_NUMBER
               value: "5432"
             - name: ODOO_DATABASE_NAME
@@ -57,14 +57,14 @@ spec:
             - name: ODOO_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: my-release-postgresql
+                  name: secret-db-postgresql
                   key: password
             - name: ODOO_EMAIL
               value: "user@example.com"
             - name: ODOO_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: my-release-odoo
+                  name: secret-erp-odoo
                   key: odoo-password
             - name: ODOO_SKIP_BOOTSTRAP
               value: "no"
@@ -103,4 +103,4 @@ spec:
       volumes:
         - name: odoo-data
           persistentVolumeClaim:
-            claimName: my-release-odoo
+            claimName: erp-odoo
